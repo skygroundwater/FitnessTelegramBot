@@ -20,5 +20,8 @@ public class AthletesServiceImpl implements AthletesService{
         return athletesRepository.findByAthleteId(chatId).stream().findAny().orElse(null);
     }
 
-
+   @Override
+    public void addNewAthleteToDB(Athlete athlete){
+        athletesRepository.save(athlete);
+   }
 }

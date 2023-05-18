@@ -6,6 +6,7 @@ import org.hibernate.Hibernate;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,7 +15,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 public class Athlete implements Serializable {
 
     @Id
@@ -25,7 +25,7 @@ public class Athlete implements Serializable {
     private String athleteName;
 
     @Column(name = "registered_at")
-    private Timestamp registeredAt;
+    private LocalDateTime registeredAt;
 
     @Column(name = "is_active")
     private boolean isActive;
@@ -33,6 +33,17 @@ public class Athlete implements Serializable {
     @OneToMany(mappedBy = "athlete", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @ToString.Exclude
     private List<TrainingNotification> notifications;
+
+    public Athlete(Long chatId, String authorName, LocalDateTime registeredAt, boolean isActive) {
+        this.athleteId = chatId;
+        this.athleteName = authorName;
+        this.registeredAt = registeredAt;
+        this.isActive = isActive;
+    }
+
+    public Athlete() {
+
+    }
 
     @Override
     public boolean equals(Object o) {
